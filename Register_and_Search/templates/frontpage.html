@@ -1,0 +1,86 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Scenario DB</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <section class="header">
+        <div class="header">
+            <div class="logo">
+                <h1>Scenario DB</h1>
+            </div>
+            <div class="navigation">
+                <a class="nav-link" href="/search_dialogue/">データの検索</a>
+                <a class="nav-link" href="/upload_file/">データ新規登録</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="inner">
+    <h1>シナリオデータの検索</h1>
+    <form method="GET" action="{% url 'search_dialogue' %}">
+        {% csrf_token %}
+        <div class="form-group full-width">
+            <label for="{{ form.keyword.id_for_label }}">キーワード</label>
+            {{ form.keyword }}
+        </div>
+        <div class="form-group half-width">
+        <label for="{{ form.filename.id_for_label }}">ファイル名</label>
+        {{ form.filename }}
+        </div>
+        <div class="form-group">
+        <label for="{{ form.character.id_for_label }}">キャラクター</label>
+        {{ form.character }}
+        </div>
+
+        <div class="form-group half-width">
+        <label for="{{ form.dialogue.id_for_label }}">台詞</label>
+        {{ form.dialogue}}
+        </div>
+        <div class="form-group">
+        <label for="{{ form.place.id_for_label }}">場面</label>
+        {{ form.place }}
+        </div>
+        <div class="form-group half-width">
+        <label for="{{ form.created_from.id_for_label }}">作成日（開始）</label>
+        {{ form.created_from }}
+        </div>
+        <div class="form-group">
+        <label for="{{ form.created_to.id_for_label }}">作成日（終了）</label>
+        {{ form.created_to }}
+        </div>
+        <button type="submit">検索</button>
+    </form>
+    
+    {% if results %}
+        <h1 class="result">検索結果</h1>
+        <table>
+            <tr>
+                <th class="filename">ファイル名</th>
+                <th class="character">キャラクター</th>
+                <th class="serif">台詞</th>
+                <th class="serifnumber">番号</th>
+                <th class="scene">場面</th>
+                <th class="creaeday">作成日</th>
+            </tr>
+            {% for result in results %}
+                <tr>
+                    <td><a href="{% url 'download_file' result.filepath result.filename %}"> {{ result.filename }}</a></td>
+                    <td>{{ result.character }}</td>
+                    <td>{{ result.dialogue }}</td>
+                    <td>{{ result.dialogue_number }}</td>
+                    <td>{{ result.place }}</td>
+                    <td>{{ result.created_date|date:"Y/m/d" }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>該当する結果はありませんでした。</p>
+    {% endif %}
+    </section>
+</body>
+</html>

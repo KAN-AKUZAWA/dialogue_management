@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <section class="header">
+        <div class="header">
+            <div class="logo">
+                <h1>Scenario DB</h1>
+            </div>
+
+            <div class="navigation">
+                <a class="nav-link" href="/search_dialogue/">データの検索</a>
+                <a class="nav-link" href="/upload_file/">データ新規登録</a>
+            </div>
+        </div>
+    </section>
+    <section class="inner">
+        <h1>アップロードされたファイルは、すでに登録済です</h1>
+        <div class="returntop">
+            <a class="button" href="/upload_file"> 別のファイルの登録を行う </a>
+        </div>
+    </section>
+</body>
+</html>
